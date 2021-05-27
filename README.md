@@ -10,5 +10,6 @@ This is the first thing I've built with Rust so optimisations will be everywhere
 
 ### Resources
 [Rust AVR Guidebook](https://book.avr-rust.com)
+
 [MiniDisplay](https://github.com/Slion/MiniDisplay/blob/master/README.md) I wouldn't have got very far without this. It's in C, but gave me enough to see how to structure data to send. They use USB via HID - I needed i2c.
 
