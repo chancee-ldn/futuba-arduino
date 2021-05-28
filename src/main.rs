@@ -12,11 +12,6 @@ use std::io::stdin;
 use std::io::stdout;
 use std::io::Write;
 
-//extern crate terminal_cli;
-//use terminal_cli::*;
-
-
-
 // Default settings of Arduino
 // see: https://www.arduino.cc/en/Serial/Begin
 const SETTINGS: serial::PortSettings = serial::PortSettings {
@@ -52,23 +47,11 @@ fn main() {
         stdin().read_line(&mut input).unwrap();
 		let mut parts = input.split_whitespace();
 
-		//#![feature(str_split_whitespace_as_str)]
-		//let mut split = "Mary had a little lamb".split_whitespace();
-		//let o = split.as_str();
-		//println!("{:?}", o);
-
-		//let pattern = std::env::args().nth(1).expect("no pattern given");
-		//let path = std::env::args().nth(2).expect("no path given");
-		
-
 		
 		let command = parts.next().unwrap();
-		//let m = parts.next();
-		//println!("message: {:?}", m);
-
 		if let args = &input {
 			println!("Event: command: {:?} message: {:?} ", command, args);
-			let mut owned_string: String = "<song, ".to_owned();
+			let mut owned_string: String = "<song,".to_owned();
 			let another_s: &str = &args;
 			let s = &another_s.replace('\n', ""); // new lines remove the cool stuff on the VFD
 
@@ -91,11 +74,4 @@ fn main() {
 }
 
 
-/*
-fn inspect(event: Message) {
-	match event {
-		Message::On => println!("on"),
-	}
-}
-*/
 

@@ -86,16 +86,78 @@ void text_box(unsigned char aAddress, unsigned char offset, unsigned char boxId,
   for (int i=0;i<str_len;i++) {
     write_byte((str[i]));
   }
-   
+  delay(1);
   Serial.println("running set up of box");
   
 }
 
+void update_interface(String a) {
+  
+  text_box_select(0x31);
+
+  text_box_select(0x1B);
+  text_box_select(0x5B);
+  text_box_select(0x48);
+  text_box_select(0x27);
+  
+  text_clear();
+  String str = a;
+  int str_len = str.length() + 1;
+  char char_array[str_len];
+  str.toCharArray(char_array, str_len);
+
+  for (int i=0;i<str_len;i++) {
+    write_byte((str[i]));
+  }
+}
+
+void update_album(String a) {
+  text_box_select(0x32);
+  
+  text_box_select(0x1B);
+  text_box_select(0x5B);
+  text_box_select(0x48);
+  text_box_select(0x27);
+ 
+  String str = a;
+  int str_len = str.length() + 1;
+  char char_array[str_len];
+  str.toCharArray(char_array, str_len);
+
+  for (int i=0;i<str_len;i++) {
+    write_byte((str[i]));
+  }
+}
+
+void update_time(String a) {
+  text_box_select(0x33);
+  
+  text_box_select(0x1B);
+  text_box_select(0x5B);
+  text_box_select(0x48);
+  text_box_select(0x27);
+ 
+  String str = a;
+  int str_len = str.length() + 1;
+  char char_array[str_len];
+  str.toCharArray(char_array, str_len);
+
+  for (int i=0;i<str_len;i++) {
+    write_byte((str[i]));
+  }
+}
+
 void draw_player_interface() {
 
+  clear_display();
   // address, offset, boxid, string
-  text_box(0x0000, 0x30, 0x31, "Song title");
-  text_box(0x0784, 0x30, 0x32, "Album title");
+  //text_box(0x000C, 0x30, 0x31, "Song title");
+  //text_box(0x0045, 0x30, 0x32, "Album title");
+  //text_box(0x00F0, 0x30, 0x33, "Track time");
+
+  set_text_box(0x0000, 0x30, 0x31);
+  set_text_box(0x0002, 0x32, 0x32); // offset by -4
+  //set_text_box(0x04C7, 0x30, 0x33);
   
   draw_mode_button(0x0007, 0x0008);
   draw_skip_button(0x0377, 0x0008);
@@ -127,7 +189,10 @@ void showParsedData() {
           draw_skip_button(0x0377, 0x0008);
         } else if (s == "song") {
           //text_box(0x000A, 0x31, c);
-          draw_player_interface();
+          //draw_player_interface();
+          update_interface(c);
+          update_album("A House of Bugs");
+          //update_time("00:01 | 03:23");
         } else if (s == "reset") {
           clear_display();
         } else {
