@@ -5,14 +5,17 @@ Some base files to get a Futuba GP1212A02A Vacuum Florescent Display firing some
 ### Futuba
 It resides on address (0x70). Although you think you are controlling pixels, you actually control a vertical/horizontal row of eight dots:
 
-○	○	●
-○	○	●
-○	○	●
-○	○	●
-○	●	●
-○	●	●
-●	●	●
-0x01	0x03	0x08
+
+| ○ | ○ | ○ |
+|---|---|---|
+| ○ | ○ | ● |
+| ○ | ○ | ● |
+| ○ | ○ | ● |
+| ○ | ○ | ● |
+| ○ | ● | ● |
+| ○ | ● | ● |
+| ● | ● | ● |
+| 0x01 | 0x03 | 0x08|
 
 Or one byte. Which is mapped top to bottom `0x0000 - 0x0007`
 So 000001 would activate the very bottom dot (or the farthest right dot in X mode) in a 8x1 block. This also took a horrible amount of time to grasp.
