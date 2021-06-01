@@ -3,7 +3,18 @@
 Some base files to get a Futuba GP1212A02A Vacuum Florescent Display firing some photons. This took an embarrassing amount of time to get working. If you are here for the Futuba `/futuba-serial` has the Arduino code, you should find enough code examples in there to see how to operate the VFD. The Rust script is purely an interface to execute those commands.
 
 ### Futuba
-It resides on address (0x70). Although you think you are controlling pixels, you actually control a vertical/horizontal row of eight dots. Or one byte. Which is mapped top to bottom `0x0000 - 0x0007`
+It resides on address (0x70). Although you think you are controlling pixels, you actually control a vertical/horizontal row of eight dots:
+
+○	○	●
+○	○	●
+○	○	●
+○	○	●
+○	●	●
+○	●	●
+●	●	●
+0x01	0x03	0x08
+
+Or one byte. Which is mapped top to bottom `0x0000 - 0x0007`
 So 000001 would activate the very bottom dot (or the farthest right dot in X mode) in a 8x1 block. This also took a horrible amount of time to grasp.
 
 ### Arduino
