@@ -16,7 +16,7 @@ When in BMP mode, you aren't addressing individual pixels but a vertical/horizon
 | ○ | ● | ● |
 | ○ | ● | ● |
 | ● | ● | ● |
-| 0x01 | 0x03 | 0x08|
+| 0x01 | 0x03 | 0x07|
 
 Or one byte. Which is mapped top to bottom `0x0000 - 0x0007`
 So 00000001 would activate the very bottom dot (or the farthest right dot in X mode) in a 8x1 block. This also took a horrible amount of time to grasp.
@@ -30,8 +30,10 @@ N.B. The data sheet for the Futuba GP1212A02A was not easy to understand; so if 
 This is the first thing I've built with Rust so optimisations will be everywhere. The Arduino is a slave and the Rust CLI sends commands which trigger functions to display some pixels on the VFD.
 
 `song a string of text to send to the VFD` will display the second argument in Text Box 1.
+
 `on randomString` will turn the LED on the Arduino to check comms are working, the random string is because I couldn't work out how to check for a null in Rust.
-'off randomString` will turn that same LED off
+
+`off randomString` will turn that same LED off
 
 
 ### Notes
