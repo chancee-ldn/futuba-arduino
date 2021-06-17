@@ -37,12 +37,12 @@ This is the first thing I've built with Rust so optimisations will be everywhere
 
 
 ### Notes
-Rust needs to know where to look for the Arduino: find the `serial_port` variable and adjust to suit your system. It should listed under `cd /dev`, you can unplug and plugin again, or there is a 'dmesg' trick after a restart.
+Rust needs to know where to look for the Arduino: find the `serial_port` variable and adjust to suit your system. It should listed: `ls /dev`, you can unplug and plugin again, or there is a 'dmesg' trick after a restart.
 
 #### Mac OS
 `let serial_port = "/dev/.usbmodem4101"`
 #### Khadas + Ubuntu
-`let serial_port = "/dev/serial/by-path/"`
+`let serial_port = "/dev/serial/by-path/xxx"`
 
 
 ### Resources
