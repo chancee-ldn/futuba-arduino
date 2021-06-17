@@ -13,6 +13,11 @@ char message[numChars] = {0};
 boolean newData = false;
 
 
+long lastTime = 0;
+long seconds = 0;
+long minutes = 0;
+
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -35,6 +40,24 @@ void loop() {
         showParsedData();
         newData = false;
     }
+
+    if(millis()-lastTime > 6000){
+      seconds++;
+      lastTime = millis();
+
+      long long x = minutes;
+      char str[256];
+      sprintf(str, "%lld", x);
+      //update_time(str);
+    }
+    if(seconds > 60){
+      minutes++;
+      seconds = 0;
+    }
+    
+  
+    draw_equal(0x0015);
+    delay(41);
 }
 
 
@@ -70,9 +93,9 @@ void recvWithStartEndMarkers() {
     }
 }
 
-void text_box(unsigned char aAddress, unsigned char offset, unsigned char boxId, String aString) {
-    // texr box setting
-  set_text_box(aAddress, offset, boxId);
+void text_box(unsigned short aAddress, unsigned short offset, unsigned short boxId, String aString, unsigned short boxLength) {
+    // text box setting
+  set_text_box(aAddress, offset, boxId, boxLength);
     // text box select
   text_box_select(boxId);
     // text box modify
@@ -150,21 +173,20 @@ void update_time(String a) {
 void draw_player_interface() {
 
   clear_display();
+  
   // address, offset, boxid, string
-  //text_box(0x000C, 0x30, 0x31, "Song title");
-  //text_box(0x0045, 0x30, 0x32, "Album title");
-  //text_box(0x00F0, 0x30, 0x33, "Track time");
-
-  set_text_box(0x0000, 0x30, 0x31);
-  set_text_box(0x0002, 0x32, 0x32); // offset by -4
-  //set_text_box(0x04C7, 0x30, 0x33);
+  text_box(0x0000, 0x30, 0x31, " Song title", 0x10);
+  text_box(0x0002, 0x32, 0x32, " Album title", 0x10);
+  text_box(0x05F8, 0x30, 0x33, "00:00", 0x05);
   
   draw_mode_button(0x0007, 0x0008);
   draw_skip_button(0x0377, 0x0008);
+  draw_equal(0x0015);
   draw_play_button(0x0417, 0x0008);
   draw_skip_button(0x04C7, 0x0008);
   draw_back_button(0x07C7, 0x0008);
-  
+
+ 
 }
 
 
@@ -190,8 +212,8 @@ void showParsedData() {
         } else if (s == "song") {
           //text_box(0x000A, 0x31, c);
           //draw_player_interface();
-          update_interface(c);
-          update_album("A House of Bugs");
+          //update_interface(c);
+          update_album("s");
           //update_time("00:01 | 03:23");
         } else if (s == "reset") {
           clear_display();

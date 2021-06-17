@@ -4,19 +4,19 @@ Some base files to get a Futuba GP1212A02A Vacuum Florescent Display firing some
 
 ### Futuba
 The GP1212A02A resides on address `0x70` when connected via i2c. 
-When in BMP mode, you aren't addressing individual pixels but a vertical/horizontal row of eight dots:
+When in BMP mode, you aren't addressing individual pixels but a vertical/horizontal row of eight dots in binary 0b00111111 = ○ ○ ● ● ● ● ● ●:
 
 
-| ○ | ○ | ○ |
-|---|---|---|
-| ○ | ○ | ● |
-| ○ | ○ | ● |
-| ○ | ○ | ● |
-| ○ | ○ | ● |
-| ○ | ● | ● |
-| ○ | ● | ● |
-| ● | ● | ● |
-| 0x01 | 0x03 | 0x07|
+| ○ | ○ | ○ | ○ | 
+|---|---|---|---|
+| ○ | ○ | ● | ○ |
+| ○ | ○ | ● | ○ |
+| ○ | ○ | ● | ● |
+| ○ | ○ | ● | ● |
+| ○ | ● | ● | ● |
+| ○ | ● | ● | ● |
+| ● | ● | ● | ● |
+| 0x01 | 0x03 | 0xFF | 0x3F |
 
 Or one byte. Which is mapped top to bottom `0x0000 - 0x0007`
 So 00000001 would activate the very bottom dot (or the farthest right dot in X mode) in a 8x1 block. This also took a horrible amount of time to grasp.
@@ -37,7 +37,7 @@ This is the first thing I've built with Rust so optimisations will be everywhere
 
 
 ### Notes
-Rust needs to know where to look for the Arduino, so look for the serial_port variable and adjust to suit your system. It should listed under 'cd /dev'. You can unplug and plugin again, or there is a 'dmesg' trick after a restart.
+Rust needs to know where to look for the Arduino: find the `serial_port` variable and adjust to suit your system. It should listed under `cd /dev`, you can unplug and plugin again, or there is a 'dmesg' trick after a restart.
 
 #### Mac OS
 `let serial_port = "/dev/.usbmodem4101"`
